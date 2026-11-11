@@ -53,3 +53,13 @@ button.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .oc .ln{font-size:13px;color:var(--dark);font-weight:600}
 .oc .ds{font-size:14px}
 .oc .pr{font-size:12px;color:var(--mute);margin-top:4px}
+
+/* Экран выбора стороны */
+.sides{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:8px}
+.sb{display:flex;flex-direction:column;align-items:center;gap:8px;padding:36px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;font-weight:400}
+.sb:hover{border-color:var(--dark);transform:translateY(-2px)}
+.sb .ic{font-size:64px;line-height:1}
+.sb b{font:700 22px/1.2 Fraunces,Georgia,serif}
+.sb .pr{font-size:13px;color:var(--mute)}
+#menuBack{margin-bottom:12px}
+.empty{color:var(--mute)}

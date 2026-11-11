@@ -178,13 +178,26 @@ $("hintBtn").onclick=()=>{
 };
 $("study").onchange=refresh;
 // ===== Меню дебютов =====
+let menuSide=null; // null — выбор стороны, "white"/"black" — список дебютов этой стороны
+const SIDES={white:{title:"Дебюты за белых",icon:"♔"},black:{title:"Дебюты за чёрных",icon:"♚"}};
 function renderMenu(){
  const s=load();
- $("cards").innerHTML=OPENINGS.map(o=>{
+ $("menuBack").hidden=!menuSide;
+ $("sides").hidden=!!menuSide;$("cards").hidden=!menuSide;
+ $("menuTitle").textContent=menuSide?SIDES[menuSide].title:"Шахматные дебюты";
+ $("menuSub").textContent=menuSide?"Выберите дебют для тренировки":"Выберите, за кого хотите тренироваться";
+ if(!menuSide){
+  $("sides").innerHTML=["white","black"].map(k=>`<button class="sb" data-side="${k}"><span class="ic">${SIDES[k].icon}</span><b>${SIDES[k].title}</b><span class="pr">Дебютов: ${OPENINGS.filter(o=>o.side===k).length}</span></button>`).join("");
+  $("sides").querySelectorAll(".sb").forEach(b=>b.onclick=()=>{menuSide=b.dataset.side;renderMenu()});
+  return;
+ }
+ const list=OPENINGS.filter(o=>o.side===menuSide);
+ $("cards").innerHTML=list.length?list.map(o=>{
   const done=Object.keys(s).filter(k=>k.startsWith(o.id+"|")).reduce((a,k)=>a+s[k],0);
-  return `<button class="oc" data-id="${o.id}"><span class="bd">${o.side==="white"?"♔ За белых":"♚ За чёрных"}</span><b>${o.name}</b><span class="ln">${o.line}</span><span class="ds">${o.desc}</span><span class="pr">Вариантов в дебюте: ${o.groups.length} · пройдено раз: ${done}</span></button>`}).join("");
+  return `<button class="oc" data-id="${o.id}"><b>${o.name}</b><span class="ln">${o.line}</span><span class="ds">${o.desc}</span><span class="pr">Вариантов в дебюте: ${o.groups.length} · пройдено раз: ${done}</span></button>`}).join(""):'<p class="empty">Дебютов пока нет.</p>';
  $("cards").querySelectorAll(".oc").forEach(b=>b.onclick=()=>openOpening(OPENINGS.find(o=>o.id===b.dataset.id)));
 }
+$("menuBack").onclick=()=>{menuSide=null;renderMenu()};
 function openOpening(o){
  op=o;cur=null;over=true;busy=false;sel=null;path=[];lastSq=[];arrows=[];hintSq=null;
  $("menu").hidden=true;$("trainer").hidden=false;
@@ -194,5 +207,5 @@ function openOpening(o){
  setStatus("Выберите вариант и нажмите «Начать».","");$("idea").textContent="";$("moves").innerHTML="";
  reset();draw();showStats();
 }
-$("back").onclick=()=>{over=true;busy=false;op=null;$("trainer").hidden=true;$("menu").hidden=false;renderMenu()};
+$("back").onclick=()=>{over=true;busy=false;menuSide=op.side;op=null;$("trainer").hidden=true;$("menu").hidden=false;renderMenu()};
 renderMenu();
