@@ -179,7 +179,7 @@ $("hintBtn").onclick=()=>{
 $("study").onchange=refresh;
 // ===== Меню дебютов =====
 let menuSide=null; // null — выбор стороны, "white"/"black" — список дебютов этой стороны
-const SIDES={white:{title:"Дебюты за белых",icon:"♔"},black:{title:"Дебюты за чёрных",icon:"♚"}};
+const SIDES={white:{title:"Дебюты за белых",icon:"♚\uFE0E"},black:{title:"Дебюты за чёрных",icon:"♚\uFE0E"}};
 function renderMenu(){
  const s=load();
  $("menuBack").hidden=!menuSide;
@@ -187,7 +187,7 @@ function renderMenu(){
  $("menuTitle").textContent=menuSide?SIDES[menuSide].title:"Шахматные дебюты";
  $("menuSub").textContent=menuSide?"Выберите дебют для тренировки":"Выберите, за кого хотите тренироваться";
  if(!menuSide){
-  $("sides").innerHTML=["white","black"].map(k=>`<button class="sb" data-side="${k}"><span class="ic">${SIDES[k].icon}</span><b>${SIDES[k].title}</b><span class="pr">Дебютов: ${OPENINGS.filter(o=>o.side===k).length}</span></button>`).join("");
+  $("sides").innerHTML=["white","black"].map(k=>`<button class="sb" data-side="${k}"><span class="ic ${k==="white"?"w":"b"}">${SIDES[k].icon}</span><b>${SIDES[k].title}</b><span class="pr">Дебютов: ${OPENINGS.filter(o=>o.side===k).length}</span></button>`).join("");
   $("sides").querySelectorAll(".sb").forEach(b=>b.onclick=()=>{menuSide=b.dataset.side;renderMenu()});
   return;
  }

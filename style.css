@@ -58,7 +58,10 @@ button.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .sides{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:8px}
 .sb{display:flex;flex-direction:column;align-items:center;gap:8px;padding:36px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;font-weight:400}
 .sb:hover{border-color:var(--dark);transform:translateY(-2px)}
-.sb .ic{font-size:64px;line-height:1}
+.sb .ic{font-size:64px;line-height:1;font-family:"Segoe UI Symbol","Noto Sans Symbols 2",serif}
+/* одна и та же заливная фигура: белая с тёмным контуром и чёрная со светлым, независимо от темы */
+.sb .ic.w{color:#fff;text-shadow:0 0 2px #000,0 0 2px #000,0 0 1px #000}
+.sb .ic.b{color:#0d1626;text-shadow:0 0 2px #d5deea,0 0 2px #d5deea,0 0 1px #d5deea}
 .sb b{font:700 22px/1.2 Fraunces,Georgia,serif}
 .sb .pr{font-size:13px;color:var(--mute)}
 #menuBack{margin-bottom:12px}
